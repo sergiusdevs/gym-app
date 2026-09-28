@@ -1,0 +1,280 @@
+<html lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style">
+<meta content="HeartFit" name="apple-mobile-web-app-title">
+<meta content="yes" name="mobile-web-app-capable">
+<meta content="#14171c" name="theme-color">
+<title>Rutina · Culturismo y Progresión</title>
+<style>
+  :root{
+    --bg: #14171c;
+    --panel: #1b1f26;
+    --panel-line: #2a2f38;
+    --ink: #eceae3;
+    --ink-dim: #9aa1ab;
+    --fuerza: #ff7a4d;
+    --calistenia: #33c9c0;
+    --gold: #e8b84b;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .display{
+    font-family: 'Oswald', 'Arial Narrow', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .mono{ font-family: 'JetBrains Mono', 'Courier New', monospace; }
+
+  .pulse-wrap{ width:100%; overflow:hidden; line-height:0; margin: 8px 0; }
+  .pulse-wrap svg{ display:block; width:100%; height:34px; }
+  .pulse-line{
+    fill:none; stroke: var(--gold); stroke-width:2;
+    stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray: 340; stroke-dashoffset: 340;
+    animation: draw 2.6s ease-out forwards;
+  }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  @media (prefers-reduced-motion: reduce){ .pulse-line{ animation:none; stroke-dashoffset:0; } }
+
+  header{ max-width: 980px; margin: 0 auto; padding: 48px 20px 8px; text-align:center; }
+  .eyebrow{ color: var(--ink-dim); font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  h1{ font-size: clamp(2rem, 7vw, 3.4rem); margin: 6px 0 4px; }
+  .subtitle{ color: var(--ink-dim); font-size: 0.95rem; max-width: 560px; margin: 0 auto 14px; line-height:1.5; }
+  .name-tag{ display:inline-block; margin-top: 4px; padding: 6px 18px; border: 1px solid var(--panel-line); border-radius: 999px; font-size: 0.85rem; color: var(--gold); letter-spacing: 0.08em; }
+
+  .toolbar{
+    max-width: 980px; margin: 22px auto 0; padding: 0 20px;
+    display:flex; justify-content:center;
+  }
+  .reset-btn{
+    background: transparent; color: var(--ink-dim);
+    border: 1px solid var(--panel-line); border-radius: 8px;
+    padding: 8px 14px; font-size: 0.78rem; cursor:pointer;
+    font-family: inherit;
+  }
+  .reset-btn:active{ background: var(--panel); }
+
+  .legend{
+    max-width: 980px; margin: 18px auto 0; padding: 0 20px;
+    display:flex; gap: 22px; flex-wrap: wrap; justify-content:center;
+    font-size: 0.8rem; color: var(--ink-dim);
+  }
+  .legend span{ display:inline-flex; align-items:center; gap:8px; }
+  .dot{ width:10px; height:10px; border-radius:50%; display:inline-block; flex-shrink:0; }
+
+  main{ max-width: 980px; margin: 0 auto; padding: 20px 14px 80px; }
+
+  .day{ background: var(--panel); border: 1px solid var(--panel-line); border-radius: 14px; margin-bottom: 18px; overflow:hidden; }
+  .day-head{
+    display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+    padding: 16px 18px; border-bottom: 1px solid var(--panel-line);
+    background: linear-gradient(90deg, rgba(232,184,75,0.06), transparent 60%);
+  }
+  .day-head h2{ margin:0; font-size: 1.35rem; }
+  .day-head .focus{ color: var(--ink-dim); font-size: 0.8rem; text-transform:none; letter-spacing:0; }
+  .day-number{ font-family:'JetBrains Mono', monospace; color: var(--gold); font-size: 0.8rem; white-space:nowrap; }
+
+  .blocks{ display:grid; grid-template-columns: 1fr; }
+  @media (min-width: 760px){ .blocks{ grid-template-columns: 1fr 1fr; } }
+
+  .block{ padding: 14px 18px 18px; }
+  .block + .block{ border-top: 1px solid var(--panel-line); }
+  @media (min-width: 760px){ .block + .block{ border-top:none; border-left: 1px solid var(--panel-line); } }
+
+  .block-label{ display:flex; align-items:center; gap:8px; font-size: 0.75rem; letter-spacing:0.14em; text-transform:uppercase; margin-bottom: 10px; }
+  .block-label .dot{ width:9px; height:9px; }
+  .block.fuerza .block-label{ color: var(--fuerza); }
+  .block.calistenia .block-label{ color: var(--calistenia); }
+
+  ul.ex-list{ list-style:none; margin:0; padding:0; }
+  .ex-item{ padding: 12px 0; border-bottom: 1px dashed var(--panel-line); }
+  .ex-item:last-child{ border-bottom:none; }
+  .ex-name{ font-weight:600; font-size: 0.96rem; }
+  .ex-sets{ font-family:'JetBrains Mono', monospace; font-size: 0.84rem; color: var(--ink-dim); margin-top: 2px; }
+  .block.fuerza .ex-sets{ color: #ffb897; }
+  .block.calistenia .ex-sets{ color: #8fe6e0; }
+  .ex-note{ font-size: 0.78rem; color: var(--ink-dim); margin-top: 3px; font-style: italic; }
+
+  /* ---- tracking widget ---- */
+  .track{
+    margin-top: 10px;
+    display:flex; align-items:center; flex-wrap:wrap; gap:8px;
+  }
+  .track input{
+    background: #101317;
+    border: 1px solid var(--panel-line);
+    color: var(--ink);
+    border-radius: 8px;
+    padding: 9px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    width: 74px;
+    min-height: 40px; /* táctil */
+  }
+  .track input::placeholder{ color: #565d68; }
+  .track button{
+    background: var(--gold);
+    color: #14171c;
+    border:none;
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-weight:700;
+    font-size: 0.82rem;
+    cursor:pointer;
+    min-height: 40px;
+  }
+  .track button:active{ opacity:0.85; }
+  .last-saved{
+    font-size: 0.76rem;
+    color: var(--gold);
+    width: 100%;
+    min-height: 1em;
+  }
+
+  .ref-section{ margin-top: 30px; padding: 0 6px; }
+  .ref-section h3{ font-size: 1.05rem; margin-bottom: 12px; }
+  table.ref{ width:100%; border-collapse: collapse; font-size: 0.88rem; }
+  table.ref th, table.ref td{ padding: 9px 10px; border-bottom: 1px solid var(--panel-line); text-align:left; }
+  table.ref th{ color: var(--gold); font-weight:600; letter-spacing:0.04em; font-size:0.74rem; text-transform:uppercase; }
+  table.ref td.mono{ color: var(--ink-dim); }
+
+  .notes{
+    margin-top: 26px; padding: 18px; background: var(--panel);
+    border: 1px solid var(--panel-line); border-radius: 14px;
+    font-size: 0.88rem; color: var(--ink-dim); line-height:1.7;
+  }
+  .notes strong{ color: var(--ink); }
+
+  footer{ text-align:center; padding: 26px 20px 50px; color: var(--panel-line); font-size: 0.72rem; letter-spacing:0.1em; text-transform:uppercase; }
+
+  @media print{
+    body{ background:#fff; color:#111; }
+    .day, .notes{ background:#fff; border-color:#ccc; }
+    .pulse-line{ stroke:#111; }
+    .track{ display:none; }
+  }
+</style>
+</head>
+<body>
+<header>
+<div class="eyebrow">· Programa individual</div>
+<h1 class="display">Culturismo + Hipertrofia</h1>
+<p class="subtitle">Rutina de 5 días para principiante, enfocada en ganar masa muscular y perder grasa. Registra peso y repeticiones y progresa con doble progresión.</p>
+<div class="name-tag mono">SERGIO</div>
+</header>
+<div class="pulse-wrap">
+<svg preserveAspectRatio="none" viewBox="0 0 1000 34">
+<path class="pulse-line" d="M0,17 L280,17 L310,4 L335,30 L360,17 L420,17 L440,10 L455,24 L470,17 L1000,17"></path>
+</svg>
+</div>
+<div class="toolbar">
+<button class="reset-btn" id="reset-all">Borrar todos los registros guardados</button>
+</div>
+<div class="legend"><span><i class="dot" style="background:var(--fuerza)"></i>Hipertrofia / progresión</span></div>
+<main><section class="day"><div class="day-head"><div><h2 class="display">Lunes</h2><div class="focus">Pecho + hombro + tríceps</div></div><div class="day-number">01 / 05</div></div><div class="blocks"><div class="block fuerza"><div class="block-label"><i class="dot" style="background:var(--fuerza)"></i>Hipertrofia</div><ul class="ex-list"><li class="ex-item" data-key="lun-press-banca" data-type="reps"><div class="ex-name">Press banca con mancuernas</div><div class="ex-sets">3 series × 6–10 rep</div><div class="ex-note">Sube 2–5 kg cuando completes 10/10/10 con técnica sólida.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="lun-press-inclinado" data-type="reps"><div class="ex-name">Press inclinado con mancuernas</div><div class="ex-sets">3 series × 8–12 rep</div><div class="ex-note">Sube 1–2 kg por mancuerna al completar 12 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="lun-press-hombro" data-type="reps"><div class="ex-name">Press de hombro en máquina</div><div class="ex-sets">3 series × 8–12 rep</div><div class="ex-note">Sube 2,5–5 kg al completar 12 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="lun-elevaciones-laterales" data-type="reps"><div class="ex-name">Elevaciones laterales</div><div class="ex-sets">3 series × 12–20 rep</div><div class="ex-note">Sube el peso solo cuando las 20 reps sean limpias.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="lun-triceps-polea" data-type="reps"><div class="ex-name">Extensión de tríceps en polea</div><div class="ex-sets">3 series × 10–15 rep</div><div class="ex-note">Sube 2,5–5 kg al completar 15 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li></ul></div></div></section><section class="day"><div class="day-head"><div><h2 class="display">Martes</h2><div class="focus">Espalda + bíceps</div></div><div class="day-number">02 / 05</div></div><div class="blocks"><div class="block fuerza"><div class="block-label"><i class="dot" style="background:var(--fuerza)"></i>Hipertrofia</div><ul class="ex-list"><li class="ex-item" data-key="mar-jalon" data-type="reps"><div class="ex-name">Jalón al pecho</div><div class="ex-sets">3 series × 8–12 rep</div><div class="ex-note">Sube 2,5–5 kg al completar 12 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="mar-remo" data-type="reps"><div class="ex-name">Remo en máquina / polea</div><div class="ex-sets">3 series × 8–12 rep</div><div class="ex-note">Sube 2,5–5 kg al completar 12 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="mar-remo-apoyado" data-type="reps"><div class="ex-name">Remo con pecho apoyado</div><div class="ex-sets">3 series × 8–12 rep</div><div class="ex-note">Controla la bajada; sube cuando completes 12.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="mar-curl" data-type="reps"><div class="ex-name">Curl de bíceps con mancuernas</div><div class="ex-sets">3 series × 8–12 rep</div><div class="ex-note">Sube 1–2 kg total al completar 12 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="mar-martillo" data-type="reps"><div class="ex-name">Curl martillo</div><div class="ex-sets">2 series × 10–15 rep</div><div class="ex-note">Sube 1–2 kg total al completar 15 en ambas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li></ul></div></div></section><section class="day"><div class="day-head"><div><h2 class="display">Miércoles</h2><div class="focus">Piernas completas + abdomen</div></div><div class="day-number">03 / 05</div></div><div class="blocks"><div class="block fuerza"><div class="block-label"><i class="dot" style="background:var(--fuerza)"></i>Hipertrofia</div><ul class="ex-list"><li class="ex-item" data-key="mie-sentadilla" data-type="reps"><div class="ex-name">Sentadilla</div><div class="ex-sets">3 series × 6–10 rep</div><div class="ex-note">Sube 2,5–5 kg al completar 10 en todas con buena técnica.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="mie-prensa" data-type="reps"><div class="ex-name">Prensa</div><div class="ex-sets">3 series × 10–15 rep</div><div class="ex-note">Sube 5–10 kg al completar 15 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="mie-rumano" data-type="reps"><div class="ex-name">Peso muerto rumano</div><div class="ex-sets">3 series × 8–12 rep</div><div class="ex-note">Sube 2,5–5 kg al completar 12 con técnica sólida.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="mie-femoral" data-type="reps"><div class="ex-name">Curl femoral</div><div class="ex-sets">3 series × 10–15 rep</div><div class="ex-note">Sube 2,5–5 kg al completar 15 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="mie-gemelo" data-type="reps"><div class="ex-name">Gemelos en prensa</div><div class="ex-sets">3 series × 12–20 rep</div><div class="ex-note">Sube 5–10 kg al completar 20 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="mie-abs" data-type="reps"><div class="ex-name">Abdominales con peso</div><div class="ex-sets">3 series × 10–15 rep</div><div class="ex-note">Sube el peso al completar 15 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li></ul></div></div></section><section class="day"><div class="day-head"><div><h2 class="display">Jueves</h2><div class="focus">Torso — pecho + espalda + hombro</div></div><div class="day-number">04 / 05</div></div><div class="blocks"><div class="block fuerza"><div class="block-label"><i class="dot" style="background:var(--fuerza)"></i>Hipertrofia</div><ul class="ex-list"><li class="ex-item" data-key="jue-press-inclinado" data-type="reps"><div class="ex-name">Press inclinado en máquina</div><div class="ex-sets">3 series × 8–12 rep</div><div class="ex-note">Sube 2,5–5 kg al completar 12 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="jue-jalon" data-type="reps"><div class="ex-name">Jalón al pecho agarre neutro</div><div class="ex-sets">3 series × 8–12 rep</div><div class="ex-note">Sube 2,5–5 kg al completar 12 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="jue-hombro" data-type="reps"><div class="ex-name">Press de hombro en máquina</div><div class="ex-sets">3 series × 8–12 rep</div><div class="ex-note">Sube 2,5–5 kg al completar 12 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="jue-remo" data-type="reps"><div class="ex-name">Remo en máquina / polea</div><div class="ex-sets">3 series × 8–12 rep</div><div class="ex-note">Sube 2,5–5 kg al completar 12 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="jue-laterales" data-type="reps"><div class="ex-name">Elevaciones laterales</div><div class="ex-sets">3 series × 12–20 rep</div><div class="ex-note">Sube el peso al completar 20 con técnica limpia.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="jue-aperturas" data-type="reps"><div class="ex-name">Aperturas en polea</div><div class="ex-sets">2 series × 12–15 rep</div><div class="ex-note">Sube ligeramente al completar 15 en ambas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li></ul></div></div></section><section class="day"><div class="day-head"><div><h2 class="display">Viernes</h2><div class="focus">Piernas + brazos</div></div><div class="day-number">05 / 05</div></div><div class="blocks"><div class="block fuerza"><div class="block-label"><i class="dot" style="background:var(--fuerza)"></i>Hipertrofia</div><ul class="ex-list"><li class="ex-item" data-key="vie-prensa" data-type="reps"><div class="ex-name">Prensa</div><div class="ex-sets">3 series × 8–12 rep</div><div class="ex-note">Sube 5–10 kg al completar 12 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="vie-extension" data-type="reps"><div class="ex-name">Extensión de cuádriceps</div><div class="ex-sets">3 series × 10–15 rep</div><div class="ex-note">Sube 2,5–5 kg al completar 15 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="vie-femoral" data-type="reps"><div class="ex-name">Curl femoral</div><div class="ex-sets">3 series × 10–15 rep</div><div class="ex-note">Sube 2,5–5 kg al completar 15 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="vie-gemelo" data-type="reps"><div class="ex-name">Gemelos</div><div class="ex-sets">3 series × 12–20 rep</div><div class="ex-note">Sube 5–10 kg al completar 20 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="vie-curl" data-type="reps"><div class="ex-name">Curl de bíceps</div><div class="ex-sets">3 series × 8–12 rep</div><div class="ex-note">Sube 1–2 kg total al completar 12 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li><li class="ex-item" data-key="vie-triceps" data-type="reps"><div class="ex-name">Tríceps en polea</div><div class="ex-sets">3 series × 10–15 rep</div><div class="ex-note">Sube 2,5–5 kg al completar 15 en todas.</div><div class="track"><input class="w-input" inputmode="decimal" placeholder="kg" type="number"><input class="r-input" inputmode="numeric" placeholder="reps" type="number"><button class="save-btn">Guardar</button><span class="last-saved"></span></div></li></ul></div></div></section><div class="ref-section"><h3 class="display">Regla de progresión</h3><table class="ref"><thead><tr><th>Paso</th><th>Qué hacer</th><th>Ejemplo</th></tr></thead><tbody><tr><td class="mono">1</td><td>Empieza dentro del rango</td><td>3×6–10 → 50 kg: 8/8/7</td></tr><tr><td class="mono">2</td><td>Añade reps con el mismo peso</td><td>50 kg: 9/8/8 → 10/9/9</td></tr><tr><td class="mono">3</td><td>Completa el máximo</td><td>50 kg: 10/10/10 ✓</td></tr><tr><td class="mono">4</td><td>Sube el peso</td><td>52,5 kg → vuelves a 7–8 reps</td></tr><tr><td class="mono">5</td><td>Repite el ciclo</td><td>Construye otra vez hasta el máximo</td></tr></tbody></table></div><div class="notes">
+<strong>RIR:</strong> termina normalmente las series dejando 1–3 repeticiones en recámara. No necesitas fallar en cada serie.<br><br>
+<strong>Descanso:</strong> 2–3 min en ejercicios compuestos y 1–2 min en aislamientos.<br><br>
+<strong>Progresión:</strong> usa doble progresión. Mantén el peso hasta completar el máximo de reps de todas las series; entonces aumenta la carga y vuelve a la parte baja del rango.<br><br>
+<strong>Técnica:</strong> si para subir peso tienes que recortar recorrido, balancearte o perder control, todavía no toca subir.<br><br>
+<strong>Objetivo:</strong> esta versión elimina el bloque de calistenia técnica de la rutina original y prioriza volumen, técnica y progresión de hipertrofia.
+</div></main>
+<footer class="mono">Rutina personalizada · Sergio · Culturismo</footer>
+<script>
+(function(){
+  function fmtDate(){
+    const d = new Date();
+    return d.toLocaleDateString('es-ES', { day:'2-digit', month:'2-digit' });
+  }
+
+  function renderLast(item, data){
+    const span = item.querySelector('.last-saved');
+    if(!span) return;
+    if(item.dataset.type === 'time'){
+      span.textContent = (data && data.time) ? `Último: ${data.time}s · ${data.date}` : '';
+    } else {
+      const w = data && data.weight ? `${data.weight}kg × ` : '';
+      const r = data && data.reps ? `${data.reps} rep` : '';
+      span.textContent = (data && (data.weight || data.reps)) ? `Último: ${w}${r} · ${data.date}` : '';
+    }
+  }
+
+  function loadItem(item){
+    const key = 'heartfit:' + item.dataset.key;
+    try{
+      const raw = localStorage.getItem(key);
+      if(raw){
+        const data = JSON.parse(raw);
+        if(item.dataset.type === 'time'){
+          const t = item.querySelector('.t-input');
+          if(t && data.time) t.value = data.time;
+        } else {
+          const w = item.querySelector('.w-input');
+          const r = item.querySelector('.r-input');
+          if(w && data.weight) w.value = data.weight;
+          if(r && data.reps) r.value = data.reps;
+        }
+        renderLast(item, data);
+      }
+    }catch(e){
+      // no hay dato guardado todavía, o el navegador bloquea el almacenamiento
+    }
+  }
+
+  function saveItem(item){
+    const key = 'heartfit:' + item.dataset.key;
+    let data;
+    if(item.dataset.type === 'time'){
+      const t = item.querySelector('.t-input');
+      data = { time: t ? t.value : '', date: fmtDate() };
+    } else {
+      const w = item.querySelector('.w-input');
+      const r = item.querySelector('.r-input');
+      data = { weight: w ? w.value : '', reps: r ? r.value : '', date: fmtDate() };
+    }
+    try{
+      localStorage.setItem(key, JSON.stringify(data));
+      renderLast(item, data);
+    }catch(e){
+      console.error('No se pudo guardar el registro', e);
+      const span = item.querySelector('.last-saved');
+      if(span) span.textContent = 'No se pudo guardar, prueba de nuevo';
+    }
+  }
+
+  document.querySelectorAll('.ex-item').forEach(function(item){
+    loadItem(item);
+    const btn = item.querySelector('.save-btn');
+    if(btn){ btn.addEventListener('click', function(){ saveItem(item); }); }
+  });
+
+  const resetBtn = document.getElementById('reset-all');
+  if(resetBtn){
+    resetBtn.addEventListener('click', function(){
+      if(!confirm('¿Borrar todos los registros guardados de peso/reps/tiempo?')) return;
+      try{
+        Object.keys(localStorage)
+          .filter(function(k){ return k.indexOf('heartfit:') === 0; })
+          .forEach(function(k){ localStorage.removeItem(k); });
+        location.reload();
+      }catch(e){
+        console.error('No se pudo restablecer', e);
+      }
+    });
+  }
+})();
+</script>
+
+
+</body></html>
